@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# This script is for Ubuntu 18.04 Bionic Beaver to download and install XRDP+XORGXRDP via
+# This script is for Ubuntu 20.04 Focal Fossa to download and install XRDP+XORGXRDP via
 # source.
 #
 # Major thanks to: http://c-nergy.be/blog/?p=11336 for the tips.
@@ -11,7 +11,7 @@
 # Use HWE kernel packages
 #
 HWE=""
-#HWE="-hwe-18.04"
+#HWE="-hwe-20.04"
 
 ###############################################################################
 # Update our machine to the latest code if we need to.
@@ -46,6 +46,7 @@ systemctl stop xrdp-sesman
 
 # Configure the installed XRDP ini files.
 # use vsock transport.
+sed -i_orig -e 's/port=3389/port=vsock:\/\/-1:3389/g' /etc/xrdp/xrdp.ini
 sed -i_orig -e 's/use_vsock=false/use_vsock=true/g' /etc/xrdp/xrdp.ini
 # use rdp security.
 sed -i_orig -e 's/security_layer=negotiate/security_layer=rdp/g' /etc/xrdp/xrdp.ini
